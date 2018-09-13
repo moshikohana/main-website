@@ -5,8 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var jsonfile = require('jsonfile');
-//var auth = require("/routes/intro");
-//var authentication = require("./authentication/autentication");
+var auth = require("./routes/auth");
+var authentication = require("./authentication/autentication");
+
 var app = express();
 
 // view engine setup
@@ -42,18 +43,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//app.use("/", auth);
-// app.use("/register", auth);
-// app.use("/login", auth);
-// app.use("/postMotors", auth);
-// app.use("/getMotors", auth);
-// app.use("/removeMotor", auth);
-
-app.use(express.static(__dirname));
+app.use("/", auth);
 
 app.get("/", function(req, res){
     res.render("index");
-
 })
 
 // catch 404 and forward to error handler
@@ -74,16 +67,16 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// app.use("/auth",function(req,res,next){
+app.use("/auth",function(req,res,next){
 
-//     if(authentication.isAuth(req.headers.authorization) ||  req.originalUrl == "/login"){
-//         next();
-//     }
-//     else{
-//         res.send(msg.unauthorized);
-//     }
+    if(authentication.isAuth(req.headers.authorization) ||  req.originalUrl == "/login"){
+        next();
+    }
+    else{
+        res.send(msg.unauthorized);
+    }
 
-// })
+})
 
 module.exports = app;
-console.log("Server is running :) ");
+console.log("Server is running :)");
