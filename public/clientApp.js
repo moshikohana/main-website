@@ -22,7 +22,7 @@ angular.module("myApplication",["ui.router","ui.bootstrap"]).config(["$httpProvi
         'Projects',{
             url:'/projects',
             controller:'ProjectsCtrl',
-            templateUrl:'views/projects.html',
+            templateUrl:'views/Projects.html',
 
         })
         .state(
